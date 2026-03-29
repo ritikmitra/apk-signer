@@ -46,3 +46,4 @@ jobs:
           key-alias: ${{ secrets.KEY_ALIAS }}
           key-password: ${{ secrets.KEY_PASSWORD }}
           sdk-version: "12.0"
+          build-tools-version : "33.0.2"

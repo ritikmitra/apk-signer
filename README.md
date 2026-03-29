@@ -11,6 +11,7 @@ Supports choosing the Android Command-line tools version.
 - `key-alias` (required) – Key alias
 - `key-password` (required) – Key password
 - `sdk-version` (optional, default `12.0`) – Command-line tools version (short version, e.g., 12.0)
+- `build-tools-version` (optional, default `33.0.2`) – Build tools version (e.g., 33.0.2)
 
 Supported versions:
 

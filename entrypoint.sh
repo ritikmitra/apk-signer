@@ -49,7 +49,7 @@ echo "sdkmanager path:"
 which sdkmanager || { echo "sdkmanager not found"; exit 1; }
 
 # Accept licenses
-yes | sdkmanager --licenses > /dev/null
+yes | sdkmanager --licenses >/dev/null 2>&1 || true
 
 # Install build-tools
 echo "Installing build-tools version $BUILD_TOOLS_VERSION..."

@@ -1,6 +1,9 @@
 name: "Sign Android APK"
 description: "Sign Android APKs using a keystore (Docker-based, stable, with SDK version input)"
 author: "Ritik Mitra"
+branding:
+  icon: lock
+  color: white
 
 inputs:
   apk-path:

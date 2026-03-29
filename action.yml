@@ -1,0 +1,35 @@
+name: "Sign Android APK"
+description: "Sign Android APKs using a keystore (Docker-based, stable, with SDK version input)"
+author: "Ritik Mitra"
+
+inputs:
+  apk-path:
+    description: "Path to APK to sign"
+    required: true
+  keystore-base64:
+    description: "Base64-encoded keystore"
+    required: true
+  keystore-password:
+    description: "Keystore password"
+    required: true
+  key-alias:
+    description: "Key alias"
+    required: true
+  key-password:
+    description: "Password for the key"
+    required: true
+  sdk-version:
+    description: "Android Command-line tools version (short version, e.g., 12.0)"
+    required: false
+    default: "12.0"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.apk-path }}
+    - ${{ inputs.keystore-base64 }}
+    - ${{ inputs.keystore-password }}
+    - ${{ inputs.key-alias }}
+    - ${{ inputs.key-password }}
+    - ${{ inputs.sdk-version }}

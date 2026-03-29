@@ -37,8 +37,8 @@ SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-${SDK_R
 echo "Downloading Android SDK $SDK_SHORT_VERSION (revision $SDK_REVISION)..."
 wget -q "$SDK_URL" -O cmdline-tools.zip
 
-mkdir -p "$ANDROID_HOME/cmdline-tools/latest"
-unzip -q cmdline-tools.zip -d "$ANDROID_HOME/cmdline-tools/latest"
+unzip -q cmdline-tools.zip -d "$ANDROID_HOME/cmdline-tools"
+mv "$ANDROID_HOME/cmdline-tools/cmdline-tools" "$ANDROID_HOME/cmdline-tools/latest"
 rm cmdline-tools.zip
 
 export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"

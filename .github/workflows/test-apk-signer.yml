@@ -13,7 +13,7 @@ jobs:
       - name: Sign APK
         uses: ./  # Use local action in the same repo
         with:
-          apk-path: app/app-release.apk
+          apk-path: test/app-release.apk
           keystore-base64: ${{ secrets.TEST_KEYSTORE_BASE64 }}
           keystore-password: ${{ secrets.TEST_KEYSTORE_PASSWORD }}
           key-alias: ${{ secrets.TEST_KEY_ALIAS }}

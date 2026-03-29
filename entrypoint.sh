@@ -7,6 +7,7 @@ KEYSTORE_PASSWORD="$3"
 KEY_ALIAS="$4"
 KEY_PASSWORD="$5"
 SDK_SHORT_VERSION="${6:-12.0}"
+BUILD_TOOLS_VERSION="${7:-33.0.2}"
 
 # Version table: Short version -> internal revision
 declare -A sdk_versions=(
@@ -37,7 +38,18 @@ mkdir -p /sdk/cmdline-tools
 unzip -q cmdline-tools.zip -d /sdk/cmdline-tools || { echo "Failed to unzip SDK"; exit 1; }
 rm cmdline-tools.zip
 
+export ANDROID_HOME="$HOME/Android/Sdk"
 export PATH=$PATH:/sdk/cmdline-tools/tools/bin
+
+# Accept licenses
+yes | sdkmanager --licenses > /dev/null
+
+# Install parametrized build-tools version
+echo "Installing build-tools version $BUILD_TOOLS_VERSION..."
+sdkmanager "build-tools;$BUILD_TOOLS_VERSION"
+
+# Add build-tools to PATH
+export PATH="$PATH:$ANDROID_HOME/build-tools/$BUILD_TOOLS_VERSION"
 
 echo "Decoding keystore..."
 echo "$KEYSTORE_BASE64" | base64 --decode > keystore.jks || { echo "Failed to decode keystore"; exit 1; }

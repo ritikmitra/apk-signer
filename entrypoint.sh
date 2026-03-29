@@ -9,7 +9,7 @@ KEY_PASSWORD="$5"
 SDK_SHORT_VERSION="${6:-12.0}"
 BUILD_TOOLS_VERSION="${7:-33.0.2}"
 
-# Version table: Short version -> internal revision
+# Version table
 declare -A sdk_versions=(
   ["20.0"]="14742923"
   ["16.0"]="12266719"
@@ -29,22 +29,28 @@ if [ -z "$SDK_REVISION" ]; then
   exit 1
 fi
 
+# Use consistent SDK location
+export ANDROID_HOME="$HOME/Android/Sdk"
+
 SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-${SDK_REVISION}_latest.zip"
 
 echo "Downloading Android SDK $SDK_SHORT_VERSION (revision $SDK_REVISION)..."
-wget -q "$SDK_URL" -O cmdline-tools.zip || { echo "Failed to download SDK"; exit 1; }
+wget -q "$SDK_URL" -O cmdline-tools.zip
 
-mkdir -p /sdk/cmdline-tools
-unzip -q cmdline-tools.zip -d /sdk/cmdline-tools || { echo "Failed to unzip SDK"; exit 1; }
+mkdir -p "$ANDROID_HOME/cmdline-tools/latest"
+unzip -q cmdline-tools.zip -d "$ANDROID_HOME/cmdline-tools/latest"
 rm cmdline-tools.zip
 
-export ANDROID_HOME="$HOME/Android/Sdk"
-export PATH=$PATH:/sdk/cmdline-tools/tools/bin
+export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
+
+# Debug (optional)
+echo "sdkmanager path:"
+which sdkmanager || { echo "sdkmanager not found"; exit 1; }
 
 # Accept licenses
 yes | sdkmanager --licenses > /dev/null
 
-# Install parametrized build-tools version
+# Install build-tools
 echo "Installing build-tools version $BUILD_TOOLS_VERSION..."
 sdkmanager "build-tools;$BUILD_TOOLS_VERSION"
 
@@ -52,20 +58,19 @@ sdkmanager "build-tools;$BUILD_TOOLS_VERSION"
 export PATH="$PATH:$ANDROID_HOME/build-tools/$BUILD_TOOLS_VERSION"
 
 echo "Decoding keystore..."
-echo "$KEYSTORE_BASE64" | base64 --decode > keystore.jks || { echo "Failed to decode keystore"; exit 1; }
+echo "$KEYSTORE_BASE64" | base64 --decode > keystore.jks
 
 echo "Aligning APK..."
-zipalign -v -p 4 "$APK_PATH" aligned.apk || { echo "zipalign failed"; exit 1; }
+zipalign -v -p 4 "$APK_PATH" aligned.apk
 
 echo "Signing APK..."
 apksigner sign --ks keystore.jks \
                --ks-pass pass:"$KEYSTORE_PASSWORD" \
                --key-pass pass:"$KEY_PASSWORD" \
-               --verbose \
-               --out signed.apk aligned.apk || { echo "apksigner failed"; exit 1; } \
+               --out signed.apk aligned.apk
 
 echo "Verifying signed APK..."
-apksigner verify signed.apk || { echo "APK verification failed"; exit 1; }
+apksigner verify signed.apk
 
 echo "APK signed and verified successfully: signed.apk"
 

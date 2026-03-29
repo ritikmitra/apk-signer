@@ -31,6 +31,7 @@ fi
 
 # Use consistent SDK location
 export ANDROID_HOME="$HOME/Android/Sdk"
+mkdir -p "$ANDROID_HOME"
 
 SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-${SDK_REVISION}_latest.zip"
 

@@ -1,6 +1,9 @@
 name: "Sign Android APK"
 description: "Sign Android APKs using a keystore (Docker-based, stable, with SDK version input)"
 author: "Ritik Mitra"
+branding:
+  icon: lock
+  color: white
 
 inputs:
   apk-path:
@@ -22,6 +25,10 @@ inputs:
     description: "Android Command-line tools version (short version, e.g., 12.0)"
     required: false
     default: "12.0"
+  build-tools-version:
+    description: "Android Build tool version"
+    required: false
+    default: "33.0.2"
 
 runs:
   using: "docker"
@@ -33,3 +40,4 @@ runs:
     - ${{ inputs.key-alias }}
     - ${{ inputs.key-password }}
     - ${{ inputs.sdk-version }}
+    - ${{ inputs.build-tools-version }}

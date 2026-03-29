@@ -49,7 +49,8 @@ echo "Signing APK..."
 apksigner sign --ks keystore.jks \
                --ks-pass pass:"$KEYSTORE_PASSWORD" \
                --key-pass pass:"$KEY_PASSWORD" \
-               --out signed.apk aligned.apk || { echo "apksigner failed"; exit 1; }
+               --verbose \
+               --out signed.apk aligned.apk || { echo "apksigner failed"; exit 1; } \
 
 echo "Verifying signed APK..."
 apksigner verify signed.apk || { echo "APK verification failed"; exit 1; }

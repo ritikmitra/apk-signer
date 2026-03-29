@@ -19,6 +19,7 @@ jobs:
           key-alias: ${{ secrets.TEST_KEY_ALIAS }}
           key-password: ${{ secrets.TEST_KEY_PASSWORD }}
           sdk-version: "12.0"
+          build-tools-version : "33.0.2"
 
       - name: Upload signed APK as artifact
         uses: actions/upload-artifact@v6

@@ -70,6 +70,10 @@ apksigner sign --ks keystore.jks \
                --key-pass pass:"$KEY_PASSWORD" \
                --out "$GITHUB_WORKSPACE/signed.apk" aligned.apk
 
+# Debugging: List files in the workspace
+echo "Listing files in the current directory ($GITHUB_WORKSPACE):"
+ls -l $GITHUB_WORKSPACE
+
 echo "Verifying signed APK..."
 apksigner verify "$GITHUB_WORKSPACE/signed.apk"
 

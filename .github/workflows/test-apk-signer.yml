@@ -22,6 +22,11 @@ jobs:
           sdk-version: "12.0"
           build-tools-version : "33.0.2"
 
+      #  Print output to debug
+      - name: Debug Output Path
+        run: |
+          echo "Signed APK path: ${{ steps.sign_app.outputs.signedReleaseFile }}"
+
       - name: Upload signed APK as artifact
         uses: actions/upload-artifact@v6
         with:

@@ -68,13 +68,13 @@ echo "Signing APK..."
 apksigner sign --ks keystore.jks \
                --ks-pass pass:"$KEYSTORE_PASSWORD" \
                --key-pass pass:"$KEY_PASSWORD" \
-               --out signed.apk aligned.apk
+               --out "$GITHUB_WORKSPACE/signed.apk" aligned.apk
 
 echo "Verifying signed APK..."
-apksigner verify signed.apk
+apksigner verify "$GITHUB_WORKSPACE/signed.apk"
 
-echo "APK signed and verified successfully: signed.apk"
+echo "APK signed and verified successfully: $GITHUB_WORKSPACE/signed.apk"
 
-echo "signedReleaseFile=$(pwd)/signed.apk" >> $GITHUB_OUTPUT
+echo "signedReleaseFile=$GITHUB_WORKSPACE/signed.apk" >> $GITHUB_OUTPUT
 
 exit 0

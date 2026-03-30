@@ -30,6 +30,10 @@ inputs:
     required: false
     default: "33.0.2"
 
+outputs:
+  signedReleaseFile:
+    description: "Path to the signed APK"
+    
 runs:
   using: "docker"
   image: "Dockerfile"

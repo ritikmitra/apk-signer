@@ -75,4 +75,6 @@ apksigner verify signed.apk
 
 echo "APK signed and verified successfully: signed.apk"
 
+echo "signedReleaseFile=$(pwd)/signed.apk" >> $GITHUB_OUTPUT
+
 exit 0

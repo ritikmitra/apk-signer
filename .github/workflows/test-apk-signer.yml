@@ -12,6 +12,7 @@ jobs:
 
       - name: Sign APK
         uses: ./  # Use local action in the same repo
+        id: sign_app
         with:
           apk-path: test/app-release.apk
           keystore-base64: ${{ secrets.TEST_KEYSTORE_BASE64 }}
@@ -24,5 +25,6 @@ jobs:
       - name: Upload signed APK as artifact
         uses: actions/upload-artifact@v6
         with:
-          name: signed-apk
-          path: signed.apk
+          name: android-apk-signed
+          path: ${{ steps.sign_app.outputs.signedReleaseFile }}
+          overwrite: true

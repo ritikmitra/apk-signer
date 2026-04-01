@@ -86,7 +86,7 @@ echo "Fixing ownership..."
 chown 1001:1001 "$GITHUB_WORKSPACE/signed.apk" || true
 chown 1001:1001 "$GITHUB_WORKSPACE/signed.apk.idsig" || true
 
-echo "signedReleaseFile=$GITHUB_WORKSPACE/signed.apk" >> $GITHUB_OUTPUT
-
+# echo "signedReleaseFile=$GITHUB_WORKSPACE/signed.apk" >> $GITHUB_OUTPUT
+echo "signedReleaseFile=signed.apk" >> $GITHUB_OUTPUT
 
 exit 0

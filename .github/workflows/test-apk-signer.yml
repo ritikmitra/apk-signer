@@ -27,6 +27,9 @@ jobs:
         run: |
           echo "Signed APK path: ${{ steps.sign_app.outputs.signedReleaseFile }}"
 
+      - name: Debug after action
+        run: ls -la /github/workspace
+
       - name: Upload signed APK as artifact
         uses: actions/upload-artifact@v6
         with:

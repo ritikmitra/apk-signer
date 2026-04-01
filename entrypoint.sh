@@ -59,20 +59,23 @@ sdkmanager "build-tools;$BUILD_TOOLS_VERSION"
 export PATH="$PATH:$ANDROID_HOME/build-tools/$BUILD_TOOLS_VERSION"
 
 echo "Decoding keystore..."
-echo "$KEYSTORE_BASE64" | base64 --decode > keystore.jks
+echo "$KEYSTORE_BASE64" | base64 --decode > "$GITHUB_WORKSPACE/keystore.jks"
 
 echo "Aligning APK..."
-zipalign -v -p 4 "$APK_PATH" aligned.apk
+zipalign -v -p 4 "$APK_PATH" "$GITHUB_WORKSPACE/aligned.apk"
 
 echo "Signing APK..."
 apksigner sign --ks keystore.jks \
                --ks-pass pass:"$KEYSTORE_PASSWORD" \
                --key-pass pass:"$KEY_PASSWORD" \
-               --out "$GITHUB_WORKSPACE/signed.apk" aligned.apk
+               --out "$GITHUB_WORKSPACE/signed.apk" \
+               "$GITHUB_WORKSPACE/aligned.apk"
 
 # Debugging: List files in the workspace
 echo "Listing files in the current directory ($GITHUB_WORKSPACE):"
-ls -l $GITHUB_WORKSPACE
+echo "PWD: $(pwd)"
+echo "Workspace: $GITHUB_WORKSPACE"
+ls -la "$GITHUB_WORKSPACE"
 
 echo "Verifying signed APK..."
 apksigner verify "$GITHUB_WORKSPACE/signed.apk"

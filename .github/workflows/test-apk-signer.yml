@@ -27,9 +27,6 @@ jobs:
         run: |
           echo "Signed APK path: ${{ steps.sign_app.outputs.signedReleaseFile }}"
 
-      - name: Fix file permissions
-        run: chmod 777 /github/workspace/signed.apk
-
       - name: Upload signed APK as artifact
         uses: actions/upload-artifact@v6
         with:
